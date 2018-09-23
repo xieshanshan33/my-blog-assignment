@@ -164,7 +164,7 @@ COMMAND [OPTIONS...] [ARGUMENTS...]
 
 &ensp;&ensp;&ensp;&ensp; 参数：命令的作用对象，比如文件名，用户名等
 
-* 注意: 
+* 温馨小提示: 
 
 &ensp;&ensp;&ensp;&ensp; 多个选项以及多参数和命令之间使用空白字符分隔
 
@@ -194,7 +194,7 @@ hwclock， clock: 显示硬件时钟
 
 ## 简单命令
 
-关机： halt, poweroff
+关机： halt（在centos7.5上，关机不断电；在centos6.10上关机断电）或 poweroff或init 0
 
 重启： reboot
 
