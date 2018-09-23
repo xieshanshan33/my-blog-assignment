@@ -96,6 +96,8 @@ help 内部命令列表
 
 &ensp;&ensp;&ensp;&ensp; type COMMAND
 
+优先使用内部命令
+
 ## 执行外部命令
 
 hash缓存表
