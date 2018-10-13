@@ -1,0 +1,1102 @@
+# 文本处理工具
+
+## grep
+
+grep [OPTIONS] PATTERN [FILE...]
+
+&ensp;&ensp;&ensp;&ensp; grep root /etc/passwd
+
+&ensp;&ensp;&ensp;&ensp; grep "$USER" /etc/passwd
+
+&ensp;&ensp;&ensp;&ensp; & grep '$USER' /etc/passwd
+
+&ensp;&ensp;&ensp;&ensp; grep `whoami` /etc/passwd
+
+gerp：
+
+--color=auto: 对匹配到的文本着色显示
+
+-v: 显示不被pattern匹配到的行
+
+-i: 忽略字符大小写
+
+-n： 显示匹配的行号
+
+ -c: 统计匹配的行数
+
+ -o: 仅显示匹配到的字符串
+
+ -q: 静默模式，不输出任何信息
+
+ -A #: after, 后#行
+
+ -B #: before, 前#行
+
+ -C #： context, 前后各#行
+
+ -e：实现多个选项间的逻辑or关系
+
+grep –e ‘cat ’ -e ‘dog’ file
+
+ -w：匹配整个单词
+
+ -E：使用ERE
+
+ -F：相当于fgrep，不支持正则表达式
+
+ -f file: 根据模式文件处理
+
+## 正则表达式
+
+匹配次数：用在要指定次数的字符后面，用于指定前面的字符要出现的次数
+
+* 匹配前面的字符任意次，包括0次
+
+* 贪婪模式：尽可能长的匹配
+
+.* 任意长度的任意字符
+
+\? 匹配其前面的字符0或1次
+
+\ + 匹配其前面的字符至少1次
+
+\ {n\ } 匹配（重复）前面的字符n次
+
+\ {m,n\ } 匹配前面的字符至少m次，至多n次
+
+\ {,n\ } 匹配前面的字符至多n次
+
+\ {n,\ } 匹配前面的字符至少n次
+
+. 单一字符
+
+[mage .] 中括号中任意字符m a g e .
+
+[ ^mage ] 除了m a g e 以外的一个字符
+
+^mage 行首锚定
+
+mage$ 行尾锚定
+
+upper lower alpha alnum digit
+
+\ (abc\ ) 分组
+
+\? 0次或1次
+
+\ + 至少重复1次以上
+
+\ < 词首
+
+\ > 词尾
+
+## egrep及扩展的正则表达式
+
+* egrep = grep -E
+
+.&ensp;&ensp;&ensp;&ensp; 任意单个字符
+
+[ ]&ensp;&ensp;&ensp;&ensp; 指定范围的字符
+
+[ ^ ]&ensp;&ensp;&ensp;&ensp; 不在指定范围的字符
+
+*&ensp;&ensp;&ensp;&ensp; 匹配前面字符任意次
+
+?&ensp;&ensp;&ensp;&ensp; 0或1次
+
++&ensp;&ensp;&ensp;&ensp; 1次或多次
+
+{m}&ensp;&ensp;&ensp;&ensp; 匹配m次
+
+{m,n}&ensp;&ensp;&ensp;&ensp; 至少m，至多n次
+
+^&ensp;&ensp;&ensp;&ensp;行首
+
+$&ensp;&ensp;&ensp;&ensp; 行尾
+
+\<, \b&ensp;&ensp;&ensp;&ensp; 语首
+
+\ >, \b&ensp;&ensp;&ensp;&ensp; 语尾
+
+分组：
+
+(  )
+
+后向引用： \1, \2, ...
+
+或者：
+
+a|b a或b
+
+C|cat C或cat
+
+(C|c)at Cat或cat
+
+## vim简介
+
+vi：文本编辑器
+
+vim是vi的增强版
+
+* 三种主要模式：
+
+&ensp;&ensp;&ensp;&ensp;命令(Normal)模式：默认模式，移动光标，剪切/粘贴文本；查看
+
+&ensp;&ensp;&ensp;&ensp; 插入(Insert)或编辑模式：修改文本
+
+&ensp;&ensp;&ensp;&ensp; 扩展命令(extended command )模式：保存，退出等
+
+Esc键 退出当前模式
+
+Esc键 Esc键 总是返回到命令模式
+
+句间移动（点结尾且带空格就是是一句话）：  ) ：下一句 ( ：上一句
+
+段落间移动（有空行算一段落）：        } :下一段 { ：上一段
+
+粘贴命令(p, paste)：
+
+p：缓冲区存的如果为整行，则粘贴当前光标所在行的下方；否则，则粘贴至当前光标所在处的后面
+
+P：缓冲区存的如果为整行，则粘贴当前光标所在行的上方；否则，则粘贴至当前光标所在处的前面
+
+改变命令(c, change)： 
+
+c: 修改后切换成插入模式，进一步编辑修改
+  
+  命令模式 --> 插入模式
+
+c$
+
+c^
+
+c0
+
+cb
+
+ce
+
+cw：删除该单词并且进入插入模式，可继续修
+改
+
+https://raw.githubusercontent.com/xieshanshan33/my-blog-assignment/master/chart/vim1.jpg
+
+https://raw.githubusercontent.com/xieshanshan33/my-blog-assignment/master/chart/vim2.jpg
+
+https://raw.githubusercontent.com/xieshanshan33/my-blog-assignment/master/chart/vim3.jpg
+
+#COMMAND
+
+cc：删除当前行
+并输入新内容，相当于S
+
+#cc
+
+C：删除当前光标
+到行尾，并切换成插入模式
+
+命令模式（特殊例子）
+
+100iwang [ESC] 粘贴“wang”100次
+
+<start position><command><end position>
+
+Command: y 复制、d 删除、gU 变大写、gu 变小写
+
+例如 0y$ 命令意味着：
+
+0 → 先到行头
+
+y → 从这里开始拷贝
+
+$ → 拷贝到本行最后一个字符
+
+ye 从当前位置拷贝到本单词的最后一个字符
+
+* 编辑二进制文件
+
+以二进制方式打开文件
+
+&ensp;&ensp;&ensp;&ensp;vim –b binaryfile
+
+扩展命令模式下，利用xxd命令转换为可读的十六进制
+
+&ensp;&ensp;&ensp;&ensp;:%!xxd
+
+编辑二进制文件
+
+扩展命令模式下，利用xxd命令转换回二进制
+
+&ensp;&ensp;&ensp;&ensp;:%!xxd –r
+
+保存退出
+
+## 定制vim的工作特性
+
+配置文件：永久有效
+
+&ensp;&ensp;&ensp;&ensp;全局：/etc/vimrc
+
+&ensp;&ensp;&ensp;&ensp;个人：~/.vimrc
+
+扩展模式：当前vim进程有效
+
+(1) 行号
+
+显示：set number, 简写为set nu
+
+取消显示：set nonumber, 简写为set nonu
+
+(2) 忽略字符的大小写
+
+启用：set ic
+
+不忽略：set noic
+
+(3) 自动缩进
+
+启用：set ai
+
+禁用：set noai
+
+(4) 智能缩进
+
+启用：smartindent 简写 set si
+
+禁用：set nosi
+
+(5) 高亮搜索
+
+启用：set hlsearch
+
+禁用：set nohlsearch
+
+(6) 语法高亮
+
+启用：syntax on
+
+禁用：syntax off
+
+(7) 显示Tab和换行符 ^I 和$显示
+
+启用：set list
+
+禁用：set nolist
+
+(8) 文件格式
+
+启用windows格式：set fileformat=dos
+
+启用unix格式：set fileformat=unix
+
+简写：set ff=dos|unix
+
+(9) 设置文本宽度
+
+set textwidth=65 (vim only)
+
+set wrapmargin=15
+
+(10) 设置光标所在行的标识线
+
+启用：set cursorline，简写cul
+
+禁用：set no cursorline
+
+(11) 复制保留格式
+
+启用：set paste
+
+禁用：set nopaste
+
+ 缩进>>  可以#  >>  缩进几行
+<< 缩回
+
+
+# shell脚本编程基础
+
+编译：高级语言-->编译器-->机器代码-->执行
+
+解释：高级语言-->执行-->解释器-->机器代码
+
+* 格式要求：首行shebang机制
+
+&ensp;&ensp;&ensp;&ensp; #!/bin/bash
+
+&ensp;&ensp;&ensp;&ensp; #!/usr/bin/python
+
+&ensp;&ensp;&ensp;&ensp; #!/usr/bin/perl
+
+shell脚本的用途有：（清楚垃圾，日志分析，备份）
+
+ 自动化常用命令
+
+ 执行系统管理和故障排除
+
+ 创建简单的应用程序
+
+ 处理文本或文件
+
+执行脚本：
+绝对路径，相对路径，bash .sh , cat .sh |bash ,加执行权限，且PATH路径中存在，直接执行不支持别名
+
+## 脚本调试
+
+检测脚本中的语法错误
+
+&ensp;&ensp;&ensp;&ensp; bash -n /path/to/some_script
+
+调试执行
+
+&ensp;&ensp;&ensp;&ensp; bash -x /path/to/some_script
+
+## 变量
+
+&ensp;&ensp;&ensp;&ensp; 强类型：变量不经过强制转换，它永远是这个数据类型，不允许隐式的类型转换。一般
+定义变量时必须指定类型、参与运算必须符合类型要求；调用未声明变量会产生错误
+
+&ensp;&ensp;&ensp;&ensp; 如：java ， c# ，python
+
+&ensp;&ensp;&ensp;&ensp; 如：print(‘magedu’+ 10) 提示出错，不会自动转换类型
+
+&ensp;&ensp;&ensp;&ensp; print(‘magedu’+str(10)) 结果为magedu10，需要显示转换类型（str是函数）
+
+&ensp;&ensp;&ensp;&ensp; 弱类型：语言的运行时会隐式做数据类型转换。无须指定类型，默认均为字符型；参与运算会自动进行隐式类型转换；变量无须事先定义可直接调用
+
+&ensp;&ensp;&ensp;&ensp; 如：bash 不支持浮点数，php，javascript
+
+&ensp;&ensp;&ensp;&ensp; 变量命名法则：不能使程序中的保留字：例如if, for （不能用系统内置关键字）；只能使用数字、字母及下划线，且不能以数字开头；见名知义；统一命名规则：驼峰命名法（建议不用-，使用_）
+
+## bash中变量的种类
+
+根据变量的生效范围等标准划分下面变量类型：
+
+&ensp;&ensp;&ensp;&ensp;局部变量：生效范围为当前shell进程；对当前shell之外的其它shell进程，包括当前shell的子shell进程均无效
+
+&ensp;&ensp;&ensp;&ensp;环境（全局）变量：生效范围为当前shell进程及其子进程
+
+&ensp;&ensp;&ensp;&ensp;本地变量：生效范围为当前shell进程中某代码片断，通常指函数
+
+&ensp;&ensp;&ensp;&ensp;位置变量：$1, $2, ...来表示，用于让脚本在脚本代码中调用通过命令行传递给它的参数
+
+&ensp;&ensp;&ensp;&ensp;特殊变量：$?, $0, $*, $@, $#,$$
+
+## 局部变量
+
+变量赋值：name=’value’
+
+可以使用引用value:
+
+&ensp;&ensp;&ensp;&ensp;(1) 可以是直接字串; name=“root"
+
+&ensp;&ensp;&ensp;&ensp;(2) 变量引用：name="$USER"
+
+&ensp;&ensp;&ensp;&ensp;(3) 命令引用：name=`COMMAND` name=$(COMMAND)
+
+变量引用：${name}    $name   后面有其他字符的时候加{} 若赋值的变量内容里有空格，是一句话，需要用引号引起来
+
+""：弱引用，其中的变量引用会被替换为变量值
+
+''：强引用，其中的变量引用不会被替换为变量值，而保持原字符串
+
+显示已定义的所有变量：set
+
+删除变量：unset name  不需要加$
+
+> 例子
+
+1.content=`cat /etc/issue`
+echo “$content”  加双引号，保留原来格式
+
+2.cmd=hostname
+ echo $cmd    hostname
+ $cmd     centos7.localdomain
+
+3.num1=100
+num2=200
+num3=$num1+$num2
+echo $num3   100+200
+
+## 环境变量
+
+变量声明、赋值：
+
+&ensp;&ensp;&ensp;&ensp;export name=VALUE
+
+&ensp;&ensp;&ensp;&ensp;declare -x name=VALUE
+
+变量引用：$name, ${name}
+
+显示所有环境变量：
+
+&ensp;&ensp;&ensp;&ensp;env
+
+&ensp;&ensp;&ensp;&ensp;printenv
+
+&ensp;&ensp;&ensp;&ensp;export
+
+&ensp;&ensp;&ensp;&ensp;declare -x
+
+删除变量：
+
+&ensp;&ensp;&ensp;&ensp;unset name
+
+$PPID当前进程的上一级父进程的id
+
+$$当前进程ID
+
+$PATHPID
+
+## unset删除
+
+只读变量：只能声明，但不能修改和删除
+
+声明只读变量：
+
+&ensp;&ensp;&ensp;&ensp;readonly name
+
+&ensp;&ensp;&ensp;&ensp;declare -r name
+
+查看只读变量：
+
+&ensp;&ensp;&ensp;&ensp;readonly –p
+
+位置变量：在脚本代码中调用通过命令行传递给脚本的参数
+
+&ensp;&ensp;&ensp;&ensp;$1, $2, ...：对应第1、第2等参数，shift [n]换位置
+
+&ensp;&ensp;&ensp;&ensp;$0: 命令（脚本名）scripname本身
+
+&ensp;&ensp;&ensp;&ensp;$*: 传递给脚本的所有参数，全部参数合为一个字符串
+
+&ensp;&ensp;&ensp;&ensp;$@: 传递给脚本的所有参数，每个参数为独立字符串
+
+> 例子test1.Sh
+
+https://raw.githubusercontent.com/xieshanshan33/my-blog-assignment/master/chart/%E4%BE%8B%E5%AD%90%24%40.jpg
+
+$#: 传递给脚本的参数的个数
+
+$@ $* 只在被双引号包起来的时候才会有差异
+
+set -- 清空所有位置变量（清除后面所有）
+
+> 练习：生成脚本，让生成新的脚本的文件自动生成格式
+
+> vim  脚本文件名
+
+> cat > $1 << EOF
+
+> 注释（文件名为$1来引用脚本名称）
+
+> EOF
+
+> chmod +x $1 自动加执行权限
+
+> vim + $1  创建
+
+> ：wq   保存退出
+
+## 退出状态
+
+进程使用退出状态来报告成功或失败
+
+• 0 代表成功， 1－255代表失败
+
+• $? 变量保存最近的命令退出状态（只保存最后一条命令的状态，最后一条对的就是0）
+
+例如：
+
+ping -c1 -W1 hostdown &> /dev/null
+
+echo $
+
+## 退出状态码
+
+bash自定义退出状态码范围0-255 超出也是错误
+
+exit [n]：自定义退出状态码
+
+注意：脚本中一旦遇到exit命令，脚本会立即终止；终止退出状态取决于exit命令后面的数字
+
+注意：如果未给脚本指定退出状态码，整个脚本的退出状态码取决于脚本中执行的最后一条命令的状态码
+
+## 算术运算
+
+bash中的算术运算:help let
+
++, -, *, /, %取模（取余） , **（乘方）
+
+实现算术运算：
+
+(1) let var=算术表达式
+
+(2) var=$[算术表达式]
+
+(3) var=$((算术表达式))
+
+(4) var=$(expr arg1 arg2 arg3 ...)
+
+(5)declare –i var = 数值   申明变量是整数
+
+(6) echo ‘算术表达式’ | bc
+
+乘法符号有些场景中需要转义， 如*
+
+bash有内建的随机数生成器： $RANDOM（0-32767）
+
+echo $[$RANDOM%50] ： 0-49之间随机数
+
+echo $[$RANDOM%63+1] ：1到63之前的随机数
+
+> 练习：生成随机颜色
+
+> color="\e[1;5;$[RANDOM%7+31]m"
+
+> End="\e[0m"
+
+> echo -e "$color 彩虹 $End"
+
+## 赋值
+
+增强型赋值：
+
++=, -=, *=, /=, %=
+
+let varOPERvalue
+
+例如:let count+=3
+
+自加3后自赋值
+
+自增，自减：
+
+let var+=1
+
+let var++
+
+let var-=1
+
+let var--
+
+## 逻辑运算
+
+true, false
+
+1, 0
+
+& 与：有0就是0
+
+1 与 1 = 1
+
+1 与 0 = 0
+
+0 与 1 = 0
+
+0 与 0 = 0
+
+| 或:有1就是1
+
+1 或 1 = 1
+
+1 或 0 = 1
+
+0 或 1 = 1
+
+0 或 0 = 0
+
+## 逻辑运算
+
+非：！或者~（在let里写不能直接写）
+
+! 1 = 0 ! true
+
+! 0 = 1 ! false
+
+短路运算
+
+短路与  &&
+
+第一个为0，结果必定为0
+
+第一个为1，第二个必须要参与运算
+
+短路或  ||
+
+第一个为1，结果必定为1
+
+第一个为0，第二个必须要参与运算
+
+异或： ^
+
+异或的两个值,相同为假，不同为真
+
+> 练习：把A和B的值调换
+
+> A=10
+
+> B=20
+
+> A=10;B=20;tmp=$A;A=$B;B=$tmp;echo A=$A B=$B
+
+或
+> A=10;B=20;A=$[A^B];B=$[A^B];A=$[A^B];echo A=$A B=$B
+
+## 条件测试
+
+判断某需求是否满足，需要由测试机制来实现
+
+专用的测试表达式需要由测试命令辅助完成测试过程
+
+评估布尔声明，以便用在条件性执行中
+
+• 若真，则返回0
+
+• 若假，则返回1
+
+测试命令：
+
+• test EXPRESSION
+
+• [ EXPRESSION ]
+
+• [[ EXPRESSION ]]
+
+注意： EXPRESSION前后必须有空白字符
+不空为真空为假
+
+例子：
+
+> str 1='magedu'
+
+> str 2='mageedu'
+
+> test "$str1"="$str2"
+
+> echo $?
+
+1为假
+
+> str2='magedu'
+
+> test "$str1"="$str2"
+
+> echo $?
+
+0为真
+
+> ["$str1" != "$str2"]
+
+> echo $?
+1为假
+
+## 条件性的执行操作符
+
+根据退出状态而定，命令可以有条件地运行
+
+• && 代表条件性的AND THEN
+
+• || 代表条件性的OR ELSE
+
+例如：
+
+grep -q no_such_user /etc/passwd \
+
+|| echo 'No such user'
+
+No such user
+
+ping -c1 -W2 station1 &> /dev/null 
+
+例如 > && echo "station1 is up" \
+
+例如 > || (echo 'station1 is unreachable'; exit 1)
+
+station1 is up
+
+## test命令
+
+长格式的例子：
+
+test "$A" = "$B" && echo "Strings are equal"
+
+test “$A” -eq “$B” && echo "Integers are equal"
+
+简写格式的例子：
+
+[ "$A" = "$B" ] && echo "Strings are equal"
+
+[ "$A" -eq "$B" ] && echo "Integers are equal"
+
+## bash的数值测试
+
+-v VAR
+
+变量VAR是否设置
+
+数值测试：
+
+-gt 是否大于
+
+-ge 是否大于等于
+
+-eq 是否等于
+
+-ne 是否不等于
+
+-lt 是否小于
+
+-le 是否小于等于
+
+> 练习:当硬盘使用率超过80%就报警
+
+> warning=80
+
+> disk =`df | grep "^/dev/sd" | tr -s ' ' '%' |cut -d'%' -f5|sort -rn | heead -n 1`
+
+> [$disk -gt $warning]&& wall disk will be full
+
+> 练习2：没输入IP会提示输入能访问up不能访问down
+
+> set -o nounset
+
+> [ $# -eq 0 ] && echo "Pls input a ip" && exit 8
+
+> ping -c 1 -w 1 $1 &> /dev/null && echo "$1 is up" || echo "$1 is down"
+
+## bash的字符串测试
+
+字符串测试：
+
+= 是否等于
+
+ascii码是否大于ascii码用 >
+
+< 是否小于
+
+!= 是否不等于
+
+=~ 左侧字符串是否能够被右侧的PATTERN所匹配
+
+注意: 此表达式一般用于[[ ]]中；扩展的正则表达式
+
+-z "STRING“ 字符串是否为空，空为真，不空为假
+
+-n "STRING“ 字符串是否不空，不空为真，空为假
+
+注意：用于字符串比较时的用到的操作数都应该使用Bash的文件测试
+
+*表示任意字符串一abc开头，加通配符就不能加“”否则会出现错误
+
+> 练习:检测IP地址是否合理
+
+> id $1 &> /dev/null && { echo $1 is exist;exit; } || (useradd $1;echo $1 is created)
+
+> echo finined
+
+
+输入检查存在显示存在退出不存在就创建
+
+## Bash的文件测试 
+
+存在性测试
+
+-a FILE：同-e
+
+-e FILE: 文件存在性测试，存在为真，否则为假
+
+存在性及类别测试
+
+-b FILE：是否存在且为块设备文件
+
+-c FILE：是否存在且为字符设备文件
+
+-d FILE：是否存在且为目录文件
+
+-f FILE：是否存在且为普通文件
+
+-h FILE 或 -L FILE：存在且为符号链接文件
+
+-p FILE：是否存在且为命名管道文件
+
+-S FILE：是否存在且为套接字文件引号
+
+## Bash的文件权限测试
+
+文件权限测试：
+
+-r FILE：是否存在且可读
+
+-w FILE: 是否存在且可写
+
+-x FILE: 是否存在且可执行
+
+文件特殊权限测试：
+
+-u FILE：是否存在且拥有suid权限
+
+-g FILE：是否存在且拥有sgid权限
+
+-k FILE：是否存在且拥有sticky权限Bash的文件属性测试
+
+文件大小测试：
+
+-s FILE: 是否存在且非空
+
+文件是否打开：
+
+-t fd: fd 文件描述符是否在某终端已经打开
+
+-N FILE：文件自从上一次被读取之后是否被修改过
+
+-O FILE：当前有效用户是否为文件属主
+
+-G FILE：当前有效用户是否为文件属组Bash的文件属性测试
+
+## 双目测试：
+
+FILE1 -ef FILE2: FILE1是否是
+
+FILE2的硬链接
+
+FILE1 -nt FILE2: FILE1是否新于
+
+FILE2（mtime）
+
+FILE1 -ot FILE2: FILE1是否旧于
+
+FILE2
+
+## Bash的组合测试条件
+
+第一种方式：
+
+COMMAND1 && COMMAND2 并且
+
+COMMAND1 || COMMAND2 或者
+
+! COMMAND 非
+
+如： [ -f “$FILE” ] && [[ 
+    
+“$FILE”=~ .*\.sh$ ]]
+
+第二种方式：
+
+EXPRESSION1 -a EXPRESSION2 并且EXPRESSION1 -o EXPRESSION2 或者! EXPRESSION
+
+必须使用测试命令进行， [[ ]] 不支持
+
+示例：
+
+[ -z “$HOSTNAME” -o $HOSTNAME "=="localhost.localdomain" ] \&& hostname www.magedu.com
+[ -f /bin/cat -a -x /bin/cat ] && cat /etc/fstab练习
+
+## 使用read命令来接受输入
+
+使用read来把输入值分配给一个或多个shell变量
+
+-p 指定要显示的提示  如：read -p "please input your name: "name
+
+-s 静默输入，一般用于密码
+
+例：
+
+read -p "Please input username: "name
+
+read -s -p "Please input password: "pass
+
+echo
+
+echo Your name is $name
+
+echo Your password is $pass
+
+-n N 指定输入的字符长度N
+
+-d ‘字符’ 输入结束符
+
+-t N TIMEOUT为N秒
+
+read 从标准输入中读取值，给每个单词分配一个变量
+
+所有剩余单词都被分配给最后一个变量
+
+read -p “Enter a filename: “ FILE
+
+> 练习：算鸡兔同笼
+
+> read -p "请输入头的数量:" tou
+
+> read -p "请输入脚的数量:" tui
+
+> let R=$tui/2-$tou
+
+> let C=$tou-$R           
+
+> echo "鸡的数量为 $C"
+> echo "兔子的数量为 $R"
+
+##bash如何展开命令行
+
+把命令行分成单个命令词
+
+展开别名
+
+展开大括号的声明（{}）
+
+展开波浪符声明（~）
+
+命令替换$() 和 ``）
+
+再次把命令行分成命令词
+
+展开文件通配（*、 ?、 [abc]等等）
+
+准备I/0重导向（<、 >）
+
+运行命令
+
+
+## 防止扩展
+
+反斜线（\）会使随后的字符按原意解释
+
+$ echo Your cost: \$5.00
+
+Your cost: $5.00
+
+加引号来防止扩展
+
+• 单引号（’ ）防止所有扩展
+
+• 双引号（” ）也防止所有扩展，
+
+但是以下情况例外：
+
+$（美元符号） － 变量扩展
+
+`（反引号） － 命令替换
+
+\（反斜线） － 禁止单个字符扩展
+
+!（叹号） － 历史命令替换bash的配置文件
+
+按生效范围划分，存在两类：
+
+全局配置：
+
+/etc/profile
+
+/etc/profile.d/*.sh
+
+/etc/bashrc
+
+个人配置：
+
+~/.bash_profile
+
+~/.bashrc
+
+## shell登录两种方式
+
+交互式登录：
+
+(1)直接通过终端输入账号密码登录
+
+(2)使用“su - UserName” 切换的用户
+
+执行顺序： /etc/profile --> 
+
+/etc/profile.d/*.sh --> 
+
+~/.bash_profile -->
+
+~/.bashrc --> /etc/bashrc
+
+非交互式登录：
+
+(1)su UserName
+
+(2)图形界面下打开的终端
+
+(3)执行脚本
+
+(4)任何其它的bash实例
+
+执行顺序： 
+/etc/profile.d/*.sh --> 
+
+/etc/bashrc -->~/.bashrc
+
+## Profile类
+
+按功能划分，存在两类：
+
+profile类和bashrc类
+
+profile类：为交互式登录的shell提供配置
+
+全局： /etc/profile, 
+
+/etc/profile.d/*.sh
+
+个人： ~/.bash_profile
+功用：
+
+(1) 用于定义环境变量
+
+(2) 运行命令或脚本
+
+## Bashrc类
+
+bashrc类：为非交互式和交互式登录的shell提供配置
+
+全局： /etc/bashrc
+
+个人： ~/.bashrc
+
+功用：
+
+(1) 定义命令别名和函数
+
+(2) 定义本地变量
+
+## 编辑配置文件生效
+
+修改profile和bashrc文件后需生效
+
+两种方法:
+
+1重新启动shell进程
+
+2 . 或source
+
+例:
+
+. ~/.bashrc
+
+## Bash 退出任务
+
+保存在~/.bash_logout文件中（用户）
+
+在退出登录shell时运行
+
+用于
+
+• 创建自动备份
+
+• 清除临时文件
+
+
+## $-变量
+
+h： hashall，打开这个选项后， Shell 会将命令所在的路径hash下来，避免每次都要查询。通过set +h将h选项关闭
+
+i： interactive-comments，包含这个选项说明当前的 shell 是一个交互式的shell。所谓的交互式shell,在脚本中， i选项是关闭的。
+
+m： monitor，打开监控模式，就可以通过Job control来控制进程的停止、继续，后台或者前台执行等。
+
+B： braceexpand，大括号扩展set+B关闭B   {}不能扩展不起作用
+
+H： history， H选项打开，可以展开历史列表中的命令，可以通过!感叹号来完成，例如“!!” 返回上最近的一个历史命令， “!n” 返回第 n 个历史命令练习
