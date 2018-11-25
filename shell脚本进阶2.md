@@ -744,8 +744,9 @@ ${var%%word*}：同上，只不过删除字符串最右侧的字符向左至最�
 
     ${var,,}：把var中的所有大写字母转换为小写
     
-![变量赋值]
-(https://raw.githubusercontent.com/xieshanshan33/my-blog-assignment/master/chart/8.2.1.png)
+## 变量赋值
+    
+![](https://raw.githubusercontent.com/xieshanshan33/my-blog-assignment/master/chart/8.2.1.png)
 
 ## 高级变量用法-有类型变量
 
